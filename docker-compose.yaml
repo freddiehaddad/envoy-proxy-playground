@@ -1,0 +1,35 @@
+version: "3.8"
+
+services:
+  server:
+    build:
+      context: ./server
+    networks:
+      static-network:
+        ipv4_address: 172.20.0.2
+    ports:
+      - 80
+
+  proxy:
+    build:
+      context: ./proxy
+    networks:
+      static-network:
+        ipv4_address: 172.20.0.3
+    ports:
+      - 9901
+      - 10000
+
+  client:
+    build:
+      context: ./client
+    networks:
+      static-network:
+        ipv4_address: 172.20.0.4
+
+networks:
+  static-network:
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.20.0.0/16
