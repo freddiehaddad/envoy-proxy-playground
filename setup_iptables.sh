@@ -25,8 +25,5 @@ echo "creating iptables rules on $DOCKER_CONTAINER_CLIENT_NAME ..."
 echo "iptables -t nat -A OUTPUT -p tcp --dport 80 -j DNAT --to-destination $DOCKER_CONTAINER_PROXY_IP:$HTTP_PORT"
 docker exec -it --privileged $DOCKER_CONTAINER_CLIENT_ID iptables -t nat -A OUTPUT -p tcp --dport 80 -j DNAT --to-destination $DOCKER_CONTAINER_PROXY_IP:$HTTP_PORT
 
-echo "printing iptables mangle rules on $DOCKER_CONTAINER_CLIENT_NAME ..."
-docker exec -it --privileged $DOCKER_CONTAINER_CLIENT_ID iptables -L -t mangle
-
 echo "printing iptables nat rules on $DOCKER_CONTAINER_CLIENT_NAME ..."
 docker exec -it --privileged $DOCKER_CONTAINER_CLIENT_ID iptables -L -t nat
