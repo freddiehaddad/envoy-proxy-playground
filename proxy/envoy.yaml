@@ -38,7 +38,7 @@ static_resources:
                 route_config:
                   name: route_config_80
                   virtual_hosts:
-                    - name: docker_server_container_virtual_host
+                    - name: whitelist_virtual_host
                       domains:
                         - "www.example.com"
                         - "www.http.com"
