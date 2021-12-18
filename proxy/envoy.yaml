@@ -28,7 +28,7 @@ static_resources:
                 http_filters:
                   - name: envoy.filters.http.router
                 route_config:
-                  name: local_route
+                  name: docker_server_route
                   virtual_hosts:
                     - name: catchall_virtual_hosts
                       domains:
