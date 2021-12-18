@@ -60,6 +60,7 @@ The files in this repository and their purpose are described here.
 │  ├─ Dockerfile ........ Docker build instructions
 │  ├─ requirements.txt .. Package requirements for Flask web app
 │  └─ server.py ......... Web server application
+├─ .gitignore ........... Git untracked files list
 ├─ README.md ............ This file
 ├─ connect_client.sh .... Script for establishing an interactive TTY in the client container
 ├─ connect_proxy.sh ..... Script for establishing an interactive TTY in the proxy container
