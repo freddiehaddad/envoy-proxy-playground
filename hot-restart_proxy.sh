@@ -1,4 +1,5 @@
 #!/bin/zsh
+
 SIGNAL="SIGHUP"
 PID=1
 
