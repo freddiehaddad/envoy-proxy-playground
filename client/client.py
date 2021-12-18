@@ -1,6 +1,5 @@
 import logging
 import signal
-import time
 
 
 logger = logging.getLogger(__name__)
