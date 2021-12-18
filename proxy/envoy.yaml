@@ -26,10 +26,27 @@ static_resources:
                     typed_config:
                       "@type": type.googleapis.com/envoy.extensions.access_loggers.stream.v3.StdoutAccessLog
                 http_filters:
+                  - name: envoy.filters.http.dynamic_forward_proxy
+                    typed_config:
+                      "@type": type.googleapis.com/envoy.extensions.filters.http.dynamic_forward_proxy.v3.FilterConfig
+                      dns_cache_config:
+                        name: dynamic_forward_proxy_cache_config
+                        dns_lookup_family: V4_ONLY
                   - name: envoy.filters.http.router
+                    typed_config:
+                      "@type": type.googleapis.com/envoy.extensions.filters.http.router.v3.Router
                 route_config:
                   name: route_config_80
                   virtual_hosts:
+                    - name: docker_server_container_virtual_host
+                      domains:
+                        - "www.example.com"
+                        - "www.http.com"
+                      routes:
+                        - match:
+                            prefix: /
+                          route:
+                            cluster: forward_proxy_cluster
                     - name: docker_server_container_virtual_host
                       domains:
                         - "*"
@@ -41,6 +58,16 @@ static_resources:
                             cluster: docker_server_container_cluster
 
   clusters:
+    - name: forward_proxy_cluster
+      lb_policy: CLUSTER_PROVIDED
+      cluster_type:
+        name: envoy.clusters.dynamic_forward_proxy
+        typed_config:
+          "@type": type.googleapis.com/envoy.extensions.clusters.dynamic_forward_proxy.v3.ClusterConfig
+          dns_cache_config:
+            name: dynamic_forward_proxy_cache_config
+            dns_lookup_family: V4_ONLY
+
     - name: docker_server_container_cluster
       type: LOGICAL_DNS
       dns_lookup_family: V4_ONLY

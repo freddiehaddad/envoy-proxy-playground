@@ -14,7 +14,7 @@ Features:
 
 ## Default Configuration
 
-Out of the box, outbound traffic on port `80` from the `client` is routed to the `proxy` on port `10000` via an `iptables` rule where the `proxy` redirects the request to the `server` container on port `80`.
+Out of the box, outbound traffic on port `80` from the `client` is routed to the `proxy` on port `10000` via an `iptables` rule where the `proxy` redirects non-whitelisted domains to the `server` container on port `80`.
 
 ```
       ┌──────────┐                         ┌──────────┐
