@@ -28,9 +28,9 @@ static_resources:
                 http_filters:
                   - name: envoy.filters.http.router
                 route_config:
-                  name: docker_server_route
+                  name: route_config_80
                   virtual_hosts:
-                    - name: catchall_virtual_hosts
+                    - name: docker_server_container_virtual_host
                       domains:
                         - "*"
                       routes:
@@ -38,14 +38,14 @@ static_resources:
                             prefix: /
                           route:
                             host_rewrite_literal: server
-                            cluster: docker_server_container
+                            cluster: docker_server_container_cluster
 
   clusters:
-    - name: docker_server_container
+    - name: docker_server_container_cluster
       type: LOGICAL_DNS
       dns_lookup_family: V4_ONLY
       load_assignment:
-        cluster_name: docker_server_container
+        cluster_name: docker_server_container_cluster
         endpoints:
           - lb_endpoints:
               - endpoint:
