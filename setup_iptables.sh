@@ -18,7 +18,7 @@ DOCKER_CONTAINER_CLIENT_ID=$(docker ps | grep $DOCKER_CONTAINER_CLIENT_NAME | aw
 echo "docker id $DOCKER_CONTAINER_CLIENT_ID"
 
 echo "getting ip address for $DOCKER_CONTAINER_PROXY_NAME ..."
-DOCKER_CONTAINER_PROXY_IP=$(docker inspect $DOCKER_CONTAINER_PROXY_ID | grep '"IPAddress": "\(\d\{1,3\}\.\)\{3\}\d\{1,3\}",' | awk '{print $2}' | tr -d "\"" | tr -d ",")
+DOCKER_CONTAINER_PROXY_IP=$(docker inspect $DOCKER_CONTAINER_PROXY_ID | grep '"IPAddress": "\(\d\{1,3\}\.\)\{3\}\d\{1,3\}",' | awk '{print $2}' | tr -d '"' | tr -d ",")
 echo "container ip: $DOCKER_CONTAINER_PROXY_IP"
 
 echo "creating iptables rules on $DOCKER_CONTAINER_CLIENT_NAME ..."
