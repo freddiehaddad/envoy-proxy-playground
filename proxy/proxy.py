@@ -31,7 +31,7 @@ def fork_and_exec(epoch: int):
     Fork and exec a new Envoy Proxy process.
     """
     executable = '/usr/local/bin/envoy'
-    config = '/etc/envoy/conf/envoy.yaml'
+    config = '/etc/envoy/envoy.yaml'
 
     logger.info(f'forking a new Envoy Proxy process with restart-epoch:{epoch}')
 

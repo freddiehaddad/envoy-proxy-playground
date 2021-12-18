@@ -3,7 +3,7 @@
 FILENAME="envoy.yaml"
 PROXY_PATH="/usr/local/bin/envoy"
 DOCKER_SOURCE="./proxy/$FILENAME"
-DOCKER_DESTINATION="/etc/envoy/conf/$FILENAME"
+DOCKER_DESTINATION="/etc/envoy/$FILENAME"
 
 echo "getting docker container name ..."
 DOCKER_CONTAINER_SUFFIX="proxy"
