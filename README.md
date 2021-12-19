@@ -17,18 +17,18 @@ Features:
 Out of the box, outbound traffic on port `80` from the `client` is routed to the `proxy` on port `10000` via an `iptables` rule where the `proxy` redirects non-whitelisted domains to the `server` container on port `80`.
 
 ```
-      ┌──────────┐                         ┌──────────┐
-      │ proxy    │  host rewrite port 80   │ server   │
-      │          ├────────────────────────►│          │
-      │          │                         │          │
-      └──────────┘                         └─────┬────┘
-           ▲                                     │
-inbound    │                                     │ server response
-port 10000 │             ┌─────────┐             │ to client
-           │  (iptables) │ client  │             │
-           └─────────────┤         │◄────────────┘
-               outbound  │         │
-               port 80   └─────────┘
+     +-----------+                          +-----------+
+     | proxy     |  host rewrite server:80  | server    |
+     |           +------------------------->|           |
+     |           |                          |           |
+     +-----------+                          +-----+-----+
+           ^                                      |
+inbound    |                                      | server response
+port 10000 |            +-----------+             |
+           | (iptables) | client    |             |
+           +------------+           |<------------+
+              outbound  |           |
+              port 80   +-----------+
 ```
 
 ```text
@@ -49,26 +49,26 @@ The files in this repository and their purpose are described here.
 
 ```Text
 ./
-├─ client/
-│  ├─ Dockerfile ........ Docker build instructions
-│  └─ client.py ......... Python application that waits for SIGTERM to keep container running
-├─ proxy/
-│  ├─ Dockerfile ........ Docker build instructions
-│  ├─ envoy.yaml ........ Envoy Proxy configuration
-│  └─ proxy.py .......... Python application to handle (hot-re)starting Envoy Proxy
-├─ server/
-│  ├─ Dockerfile ........ Docker build instructions
-│  ├─ requirements.txt .. Package requirements for Flask web app
-│  └─ server.py ......... Web server application
-├─ .gitignore ........... Git untracked files list
-├─ README.md ............ This file
-├─ connect_client.sh .... Script for establishing an interactive TTY in the client container
-├─ connect_proxy.sh ..... Script for establishing an interactive TTY in the proxy container
-├─ connect_server.sh .... Script for establishing an interactive TTY in the server container
-├─ docker-compose.yaml .. Docker container definitions
-├─ hot_restart_proxy.sh . Script to perform Envoy hot restart
-├─ push_proxy_config.sh . Script to publish a new Envoy config to the proxy container
-└─ setup_iptables.sh .... Script for configuring iptables rules on the client container
++- client/
+|  +- Dockerfile ........ Docker build instructions
+|  +- client.py ......... Python application that waits for SIGTERM to keep container running
++- proxy/
+|  +- Dockerfile ........ Docker build instructions
+|  +- envoy.yaml ........ Envoy Proxy configuration
+|  +- proxy.py .......... Python application to handle (hot-re)starting Envoy Proxy
++- server/
+|  +- Dockerfile ........ Docker build instructions
+|  +- requirements.txt .. Package requirements for Flask web app
+|  +- server.py ......... Web server application
++- .gitignore ........... Git untracked files list
++- README.md ............ This file
++- connect_client.sh .... Script for establishing an interactive TTY in the client container
++- connect_proxy.sh ..... Script for establishing an interactive TTY in the proxy container
++- connect_server.sh .... Script for establishing an interactive TTY in the server container
++- docker-compose.yaml .. Docker container definitions
++- hot_restart_proxy.sh . Script to perform Envoy hot restart
++- push_proxy_config.sh . Script to publish a new Envoy config to the proxy container
++- setup_iptables.sh .... Script for configuring iptables rules on the client container
 ```
 
 ## Brining up the Containers
